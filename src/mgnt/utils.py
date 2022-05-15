@@ -13,3 +13,7 @@ def finde_die_spitze(measurement) -> tuple[float, float]:
 
 def unzip(tuples):
     return zip(*tuples)
+
+
+def to_csv(measurement):
+    return "\n".join(map(lambda t: f"{t[0]}, {t[1]}", zip(measurement.Vr, measurement.Vc)))
