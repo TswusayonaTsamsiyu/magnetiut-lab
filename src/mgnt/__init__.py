@@ -1,3 +1,5 @@
+import pandas as pd
+from pathlib import Path
 from .fitting import fit_linear
 from .parsing import parse_measurement
 from .utils import finde_die_spitze, unzip
@@ -21,3 +23,8 @@ def plot_loops(material: str):
         for measurement in map(parse_measurement, iter_material(material)):
             plot_loop(plt, measurement)
         plt.set(xlabel="Vr [V]", ylabel="Vc [V]")
+
+
+def spitzen_to_csv(material: str, path: Path):
+    data = list(reversed(list(map(finde_die_spitze, map(parse_measurement, iter_material(material))))))
+    pd.DataFrame(data).to_csv(path, index=False, header=False)
