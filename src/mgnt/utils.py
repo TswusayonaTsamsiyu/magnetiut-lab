@@ -3,7 +3,11 @@ import numpy as np
 
 def get_max(array: np.ndarray):
     max_value = np.max(array)
-    return max_value, np.where(array == max_value)[0][0]
+    return max_value, get_index(array, max_value)
+
+
+def get_index(array: np.ndarray, value):
+    return np.where(array == value)[0][0]
 
 
 def finde_die_spitze(measurement) -> tuple[float, float]:
