@@ -7,6 +7,7 @@ ILAY_LAB_DIR = Path("G:/") / ".shortcut-targets-by-id" / "1qgY2gJharU3uwILQitDrQ
 LAB_DIR = GABI_LAB_DIR if gethostname() == GABI_LAPTOP else ILAY_LAB_DIR
 MAGNETISM_DIR = LAB_DIR / "Physics Lab B" / "4. Magnetism"
 PERMEABILITY_DIR = MAGNETISM_DIR / "1. Permeability"
+AREA_TABLE = PERMEABILITY_DIR / "sizes.csv"
 
 
 def is_csv(path: Path) -> bool:
