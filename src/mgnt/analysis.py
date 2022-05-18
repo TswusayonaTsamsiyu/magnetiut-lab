@@ -2,20 +2,19 @@ import pandas as pd
 
 from .fitting import fit_linear
 from .plotting import plot, plot_fit
-from .utils import unzip, get_max, get_index
+from .utils import unzip, get_extrema, get_index
 from .fs import get_measurement_path, iter_material
 from .parsing import parse_measurement, parse_areas
 from .types import Measurement, Axes, Path, Mat, Res
-
 
 AIR_PERM_THEORY = 1.25663753e-6
 AIR_PERM_MEASURED = 0.00312922
 PROP = AIR_PERM_MEASURED / AIR_PERM_THEORY
 
 
-def finde_die_spitze(measurement: Measurement) -> tuple[float, float]:
-    max_x, max_index = get_max(measurement.Vr)
-    return max_x, measurement.Vc[max_index]
+def finde_die_spitze(measurement: Measurement) -> tuple:
+    max_x, max_i, min_x, min_i = get_extrema(measurement.Vr)
+    return max_x, measurement.Vc[max_i], min_x, measurement.Vc[min_i]
 
 
 def plot_loop(axes: Axes, measurement: Measurement):
@@ -44,14 +43,20 @@ def method_2(mat1: Mat, mat2: Mat) -> float:
     res = max(get_resistances(mat1).intersection(get_resistances(mat2)))
     m1 = parse_measurement(get_measurement_path(mat1, res))
     m2 = parse_measurement(get_measurement_path(mat2, res))
-    a, i = get_max(m1.Vr)
-    b, j = get_max(m2.Vr)
+    a, i, _, __ = get_extrema(m1.Vr)
+    b, j, _, __ = get_extrema(m2.Vr)
     flux = m1.Vc[i] / m2.Vc[j]
     # chosen_max = min(a, b)
     # flux = m1.Vc[get_index(m1.Vr, chosen_max)] / m2.Vc[get_index(m2.Vr, chosen_max)]
-    areas = parse_areas()
+    # areas = parse_areas()
     area = get_area(mat2) / get_area(mat1)
     return flux * area * b / a
+
+
+def method_3(material: Mat, resistance: Res) -> float:
+    m = parse_measurement(get_measurement_path(material, resistance))
+    max_x, max_y, min_x, min_y = finde_die_spitze(m)
+    return (max_y - min_y) / (max_x - min_x) / PROP
 
 
 def plot_spitzen(material: Mat):
