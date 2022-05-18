@@ -2,13 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from contextlib import contextmanager
 
-from .parsing import Measurement
-
 FIT_CURVE_DENSITY = 1000
-
-
-def plot_loop(axes: plt.Axes, measurement: Measurement):
-    axes.scatter(measurement.Vr, measurement.Vc)
 
 
 def plot_fit(axes, fit, xdata, params, **kwargs):

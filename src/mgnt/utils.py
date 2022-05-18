@@ -1,4 +1,7 @@
 import numpy as np
+from functools import lru_cache
+
+cached = lru_cache(None)
 
 
 def get_max(array: np.ndarray):
@@ -8,11 +11,6 @@ def get_max(array: np.ndarray):
 
 def get_index(array: np.ndarray, value):
     return np.where(array == value)[0][0]
-
-
-def finde_die_spitze(measurement) -> tuple[float, float]:
-    max_x, max_index = get_max(measurement.Vr)
-    return max_x, measurement.Vc[max_index]
 
 
 def unzip(tuples):

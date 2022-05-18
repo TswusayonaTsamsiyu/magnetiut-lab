@@ -1,19 +1,10 @@
-import numpy as np
 import pandas as pd
-from pathlib import Path
-from dataclasses import dataclass
-from functools import lru_cache
 
+from .utils import cached
 from .fs import AREA_TABLE
+from .types import Measurement, Path
 
 COLUMNS = [3, 4, 10]
-
-
-@dataclass
-class Measurement:
-    time: np.ndarray
-    Vr: np.ndarray  # x
-    Vc: np.ndarray  # y
 
 
 def read_columns(path: Path, columns: list[int]):
@@ -25,6 +16,6 @@ def parse_measurement(path: Path) -> Measurement:
     return Measurement(*read_columns(path, COLUMNS))
 
 
-@lru_cache(None)
+@cached
 def parse_areas() -> dict:
     return dict(zip(*read_columns(AREA_TABLE, [0, 3])))
