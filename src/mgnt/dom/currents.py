@@ -1,4 +1,5 @@
 import pandas as pd
+from numpy import sign
 
 from mgnt.common.utils import cached
 
@@ -12,4 +13,4 @@ def get_iv_table():
 
 
 def get_current(voltage):
-    return get_iv_table()[abs(voltage)]
+    return sign(voltage) * get_iv_table()[abs(voltage)]
