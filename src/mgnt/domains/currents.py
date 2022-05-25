@@ -1,6 +1,7 @@
 import pandas as pd
 
-from mgnt.utils import cached
+from mgnt.common.utils import cached
+
 from .fs import IV_TABLE
 
 

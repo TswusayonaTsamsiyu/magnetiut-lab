@@ -1,6 +1,7 @@
 import pandas as pd
 
-from .utils import cached
+from mgnt.common.utils import cached
+
 from .fs import AREA_TABLE
 from .types import Measurement, Path
 
@@ -19,3 +20,7 @@ def parse_measurement(path: Path) -> Measurement:
 @cached
 def parse_areas() -> dict:
     return dict(zip(*read_columns(AREA_TABLE, [0, 3])))
+
+
+def to_csv(measurement):
+    return "\n".join(map(lambda t: f"{t[0]}, {t[1]}", zip(measurement.Vr, measurement.Vc)))

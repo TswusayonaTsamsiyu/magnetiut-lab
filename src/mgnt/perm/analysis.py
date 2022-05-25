@@ -1,8 +1,9 @@
 import pandas as pd
 
-from .fitting import fit_linear
-from .plotting import plot, plot_fit
-from .utils import unzip, get_extrema, get_index
+from mgnt.common.fitting import fit_linear
+from mgnt.common.plotting import plot, plot_fit
+from mgnt.common.utils import unzip, get_extrema
+
 from .fs import get_measurement_path, iter_material
 from .parsing import parse_measurement, parse_areas
 from .types import Measurement, Axes, Path, Mat, Res

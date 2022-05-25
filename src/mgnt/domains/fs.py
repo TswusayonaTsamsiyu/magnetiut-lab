@@ -1,4 +1,4 @@
-from mgnt.fs import MAGNETISM_DIR
+from mgnt.common.fs import MAGNETISM_DIR
 
 DOMAINS_DIR = MAGNETISM_DIR / "2. Domains"
 IV_TABLE = DOMAINS_DIR / "VI.xlsx"
