@@ -19,16 +19,23 @@ def iter_images():
     return filter(is_bmp, DOMAINS_DIR.iterdir())
 
 
-def read_image(arm, voltage):
-    return cv.imread(str(DOMAINS_DIR / f"{arm}{voltage}.bmp"))
+def get_image_path(arm, voltage):
+    return DOMAINS_DIR / f"{arm}{voltage}.bmp"
 
 
-def process_image(path):
-    # return cv.threshold(cv.cvtColor(cv.imread(str(path)), cv.COLOR_BGR2GRAY), 128, 192, cv.THRESH_OTSU)[1]
-    return cv.inRange(cv.imread(str(path)), LOWER, UPPER)
+def read_image(path):
+    return cv.imread(str(path))
 
 
-def get_spin_ratio(img):
+def otsu(image):
+    return cv.threshold(cv.cvtColor(image, cv.COLOR_BGR2GRAY), 128, 192, cv.THRESH_OTSU)[1]
+
+
+def red(image):
+    return cv.inRange(image, LOWER, UPPER)
+
+
+def get_black_ratio(img):
     return (img == 0).sum() / img.size
 
 
@@ -46,9 +53,10 @@ def parse_voltage(path):
     return float(path.stem[1:])
 
 
-def generate_data():
+def generate_data(mask):
     for path in iter_images():
         try:
-            yield get_current(parse_voltage(path)), get_spin_ratio(process_image(path))
+            image = read_image(path)
+            yield get_current(parse_voltage(image)), get_black_ratio(mask(image))
         except KeyError:
             pass
