@@ -1,13 +1,9 @@
 from pathlib import Path
 
-from mgnt.common.fs import MAGNETISM_DIR
+from mgnt.common.fs import MAGNETISM_DIR, is_csv
 
 PERMEABILITY_DIR = MAGNETISM_DIR / "1. Permeability"
 AREA_TABLE = PERMEABILITY_DIR / "sizes.csv"
-
-
-def is_csv(path: Path) -> bool:
-    return path.suffix == ".csv"
 
 
 def get_material_path(material: str) -> Path:
