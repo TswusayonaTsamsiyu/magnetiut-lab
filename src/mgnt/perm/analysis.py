@@ -18,8 +18,8 @@ def finde_die_spitze(measurement: Measurement) -> tuple:
     return max_x, measurement.Vc[max_i], min_x, measurement.Vc[min_i]
 
 
-def plot_loop(axes: Axes, measurement: Measurement):
-    axes.scatter(measurement.Vr, measurement.Vc)
+def plot_loop(axes: Axes, measurement: Measurement, label=None):
+    axes.scatter(measurement.Vr, measurement.Vc, label=label or "")
 
 
 def finde_die_spitzen(material: Mat):
