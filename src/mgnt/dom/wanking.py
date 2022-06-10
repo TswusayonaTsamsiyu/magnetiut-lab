@@ -16,6 +16,7 @@ def try_otsu(arm, voltage, thresh=None):
     thresh = thresh or threshold_otsu(img)
     mask = img > thresh
     imshow(mask)
+    plt.axis("off")
     plt.show()
     return mask, thresh
 
@@ -39,9 +40,9 @@ def plot_loop():
         ia, ma = sort_by_current(i[:30], m[:30])
         ib, mb = sort_by_current(i[30:], m[30:])
         ia, ib = -np.array(ia), -np.array(ib)
-        ma, mb = np.array(ma) - 0.5, np.array(mb) - 0.5
-        axes.plot(ia, ma, label="a")
-        axes.plot(ib, mb, label="b")
-        axes.scatter(ia, ma, label="a")
-        axes.scatter(ib, mb, label="b")
-        axes.legend()
+        ma, mb = np.array(ma) * 100, np.array(mb) * 100
+        axes.plot(ia, ma, "-o")
+        axes.plot(ib, mb, "-o")
+        axes.set(xlabel="Electric Current [A] ∝ H",
+                 ylabel="Pixel Ratio [%] ∝ M")
+        axes.grid(True)
