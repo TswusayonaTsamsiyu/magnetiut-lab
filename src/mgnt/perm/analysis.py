@@ -65,14 +65,14 @@ def plot_spitzen(material: Mat):
         x, y = finde_die_spitzen(material)
         plt.scatter(x, y)
         plot_fit(plt, lambda x_, a, b: a * x_ + b, x, fit_linear(x, y))
-        plt.set(xlabel="Vr [V]", ylabel="Vc [V]")
+        plt.set(xlabel="Vr [V] ∝ H", ylabel="Vc [V] ∝ B")
 
 
 def plot_loops(material: Mat):
     with plot() as plt:
         for measurement in map(parse_measurement, iter_material(material)):
             plot_loop(plt, measurement)
-        plt.set(xlabel="Vr [V]", ylabel="Vc [V]")
+        plt.set(xlabel="Vr [V] ∝ H", ylabel="Vc [V] ∝ B")
 
 
 def spitzen_to_csv(material: Mat, path: Path):
